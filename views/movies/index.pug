@@ -1,0 +1,26 @@
+extends ../layouts/main.pug
+block content
+  .container
+    header
+      h1= "Movies"
+
+    div
+      table.table.table-striped
+        thead
+          tr
+            th Title
+            th Status
+            th Actions
+        
+        tbody
+          each movie in movies
+            tr
+              td
+                a(href=`/movies/${movie.id}`)= movie.title
+              td= movie.status
+              td
+                a(href=`/movies/${movie.id}/edit`) edit
+                =" | "
+                form.destroy(action="/movies/destroy", method="POST", onsubmit='return confirm("Are you Sure?????");')
+                  input(type="hidden", name="id", value=movie.id)
+                  input(type="submit", value="delete")

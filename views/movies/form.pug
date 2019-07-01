@@ -1,0 +1,21 @@
+form(action=(movie ? "/movies/update" : "/movies"), method="POST")
+    if movie
+        input(type="hidden", name="id", value=movie.id)
+
+    .form-group
+        label Title
+        input.form-control(name="movie[title]", required, value=(movie ? movie.title : null))
+
+    .form-group
+        label Content
+        textarea.form-control(name="movie[content]")
+            = movie ? movie.content : null
+        
+    .form-group
+        label Status
+        select.form-control(name="movie[status]", required)
+            each status in ['DRAFT', 'PUBLISHED']
+                option(value=status, selected=(movie && movie.status === status))= status.toLowerCase()
+    
+    .form-group
+        button.btn.btn-dark(type="submit") Submit
