@@ -17,7 +17,7 @@ exports.authenticate = (req, res) => {
         if (isMatch) {
           req.session.userId = author.id;
           req.flash('success', 'You are logged in.');
-          res.redirect('/blogs');
+          res.redirect('/movies');
         } else {
           req.flash('error', `ERROR: Your credentials do not match.`);
           res.redirect('/login');
