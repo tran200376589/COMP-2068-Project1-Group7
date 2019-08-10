@@ -60,7 +60,7 @@ app.use('/images', express.static('assets/images'));
 
 // Authentication helpers
 const isAuthenticated = (req) => {
-    return req.session && req.sessionuserId;
+    return req.session && req.session.userId;
 };
 app.use((req, res, next) => {
     req.isAuthenticated = () => {
