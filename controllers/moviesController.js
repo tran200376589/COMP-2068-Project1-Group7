@@ -61,7 +61,7 @@ exports.show = (req, res) => {
     req.isAuthenticated();
 
     Movie.findOne({
-        _id: req.params.id,
+        _id: req.params._id,
         author: req.session.userId
     })
     .then(movie => {
@@ -88,7 +88,7 @@ exports.edit = (req, res) => {
     req.isAuthenticated();
     
     Movie.findOne({
-        _id: req.params.id,
+        _id: req.params._id,
         author: req.session.userId
     })
     .then(movie => {
@@ -106,16 +106,16 @@ exports.edit = (req, res) => {
 exports.create = (req, res) => {
     req.isAuthenticated();
 
-    req.body.blog.author = req.session.userId;
+    req.body.author = req.session.userId;
 
-    Movie.create(req.body.blog)
+    Movie.create(req.body)
     .then(() => {
         req.flash('success', 'New Movie was created successfully.');
         res.redirect('/movies');
     })
     .catch(err => {
         req.flash('error', `ERROR: ${err}`);
-        res.redirect('/blogs/new');
+        res.redirect('/movies/new');
     });
 };
 
@@ -123,24 +123,24 @@ exports.update = (req, res) => {
     req.isAuthenticated();
 
     Movie.updateOne({
-        _id: req.body.id,
+        _id: req.body._id,
         author: req.session.userId
-    }, req.body.movie, {
+    }, req.body, {
         runValidators: true
     })
     .then(() => {
         req.flash('success', 'New Movie was created successfully.');
-        res.redirect(`/movies/${req.body.id}`);
+        res.redirect(`/movies/${req.body._id}`);
     })
     .catch(err => {
         req.flash('error', `ERROR: ${err}`);
-        res.redirect(`/movies/${req.body.id}/edit`);
+        res.redirect(`/movies/${req.body._id}/edit`);
     });
 };
 
 exports.destroy = (req, res) => {
     Movie.deleteOne({
-        _id: req.body.id,
+        _id: req.body._id,
         author: req.session.userId
     })
     .then(() => {
